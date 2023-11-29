@@ -21,7 +21,7 @@ welcome() {
 archlinux() {
     echo -e "${RED}Installing dependencies...${NC}"
     sudo pacman -Syyu --noconfirm
-    sudo pacman -S --noconfirm --needed git python python-pip python-setuptools python-wheel python-virtualenv ffmpeg nodejs npm
+    sudo pacman -S --noconfirm --needed git python python-pip python-setuptools python-wheel python-virtualenv ffmpeg
     echo -e "${GREEN}Dependencies installed.${NC}"
 }
 
@@ -29,14 +29,24 @@ ubuntu() {
     echo -e "${RED}Installing dependencies...${NC}"
     sudo apt-get update
     sudo apt-get upgrade -y
-    sudo apt-get install -y git python3 python3-pip python3-setuptools python3-wheel python3-virtualenv ffmpeg nodejs npm
+    sudo apt-get install -y git python3 python3-pip python3-setuptools python3-wheel python3-virtualenv ffmpeg
     echo -e "${GREEN}Dependencies installed.${NC}"
 }
 
 fedora() {
     echo -e "${RED}Installing dependencies...${NC}"
     sudo dnf update
-    sudo dnf install -y git python3 python3-pip python3-setuptools python3-wheel python3-virtualenv ffmpeg nodejs npm
+    sudo dnf install -y git python3 python3-pip python3-setuptools python3-wheel python3-virtualenv ffmpeg
+    echo -e "${GREEN}Dependencies installed.${NC}"
+}
+
+termux() {
+    echo -e "${RED}Installing dependencies...${NC}"
+    apt update -y
+    apt upgrade -y
+    apt install python -y
+    pip3 install virtualenv
+    apt install git ffmpeg -y
     echo -e "${GREEN}Dependencies installed.${NC}"
 }
 
@@ -46,7 +56,6 @@ other_os() {
     echo -e "${GREEN}1. Python Version 3+${NC}"
     echo -e "${GREEN}2. Git${NC}"
     echo -e "${GREEN}3. Python3-pip${NC}"
-    echo -e "${GREEN}4. NodeJS${NC}"
 }
 
 check_os() {
@@ -64,6 +73,8 @@ check_os() {
     elif [ $os == "3" ]; then
         fedora
     elif [ $os == "4" ]; then
+        termux
+    elif [ $os == "5" ]; then
         other_os
     else
         echo -e "${RED}Invalid option.${NC}"
